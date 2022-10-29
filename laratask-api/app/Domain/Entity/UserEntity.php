@@ -2,16 +2,16 @@
 
 namespace App\Domain\Entity;
 
- final class Task{
+ final class UserEntity{
     private int $id;
     private string $name;
-    private string $description;
-    private bool $completed = false;
+    private string $email;
+    private string $password;
 
     public function __construct(array $values){
         $this->name = $values['name'];
-        $this->description = $values['description'];
-        $this->completed = $values['completed'];
+        $this->email = $values['email'];
+        $this->password = $values['password'];
 
         if(array_key_exists('id',$values)){
             $this->id = $values['id'];
@@ -22,8 +22,8 @@ namespace App\Domain\Entity;
         return [
             'id'=>$this->id,
             'name' =>$this->name,
-            'description' =>$this->description,
-            'completed' => boolval($this->completed),
+            'email' =>$this->email,
+            'password' => $this->password,
         ];
     }
 
@@ -32,20 +32,20 @@ namespace App\Domain\Entity;
         return $this->name;
     }
 
-    public function getDescription():string{
-        return $this->description;
+    public function getEmail():string{
+        return $this->email;
+    }
+
+    
+    public function getPassword():string{
+        return $this->password;
     }
 
     public static function create(array $values):self{
         return new self($values);
     }
 
-    public function complete():void{
-        $this->completed = true;
-    }
 
-    public function  isCompleted():bool{
-        return $this->completed;
-    }
+
 
 }

@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\CreateUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Domain\UseCase\CreateTaskDto;
-use App\Domain\UseCase\CreateTask;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\CreateTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,26 +17,20 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::prefix('tasks')->group(function () {
+        Route::post('/create', [CreateTaskController::class ,'handle']);
+    });
 });
 
-// Route::get('/test',function (){
+
+Route::prefix('users')->group(function () {
+    Route::post('/create', [CreateUserController::class ,'handle']);
+});
+
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class ,'handle']);
+});
 
 
-//     $createTaskDto = new CreateTaskDto([
-//         'name'=>'test',
-//         'completed' => false,
-//         'description' => 'test'
-//     ]);
-
-//     $createTask = new CreateTask();
-
-//     $output = $createTask->execute($createTaskDto);
-//     return [
-//         'msg' => $output
-//     ];
-// });
-
-
-Route::post('/tasks/create',[TaskController::class ,'create']);

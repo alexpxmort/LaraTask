@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name')->unique()->nullable();
+            $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->boolean('completed')->default(false);
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')->onDelete('cascade');

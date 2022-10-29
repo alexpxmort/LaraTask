@@ -3,30 +3,40 @@ namespace  App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Request;
 use Illuminate\Support\Facades\Validator;
-use App\Domain\UseCase\CreateTask;
 use App\Domain\UseCase\CreateTaskDto;
+use App\Http\HttpResponseStatusHelper;
+use App\Interfaces\CreateTaskInterface;
 
-class TaskController extends Controller{
 
-    public function create(){
+class CreateTaskController extends Controller{
+
+    private $createTask;
+    public function __construct(CreateTaskInterface $createTask)
+    {
+        $this->createTask = $createTask;
+    }
+
+    public function handle(){
+        $user = Request::user();
+        
         $inputData = Request::all();
         $validator =   $this->validateTask($inputData);
+        $inputData['userId'] = $user->id;
 
         if(!$validator->fails()){
             try{
                 $createTaskDto =  CreateTaskDto::create($inputData);
-                $output =  CreateTask::execute($createTaskDto);
+                $output =  $this->createTask->execute($createTaskDto->toArray());
 
-                return response()->json([
-                    'ok'=>$output
-                ]);
+
+                return response()->json($output);
             }catch(\Exception $e){
                 return response()->json([
                     'msg'=>$e->getMessage(),
-                ],400);
+                ],HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
               }
         }else{
-            return response()->json($validator->errors(),400);
+            return response()->json($validator->errors(),HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
         }
     }
 
@@ -34,7 +44,7 @@ class TaskController extends Controller{
         $validate = Validator::make($data,[
              'name'=>'required|string',
              'description'=>'required|string',
-             'completed'=>'required|boolean',
+             'completed'=>'required|boolean'
          ]);
 
          return $validate;

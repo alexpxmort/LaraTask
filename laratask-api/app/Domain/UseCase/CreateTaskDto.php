@@ -7,11 +7,13 @@ final class CreateTaskDto {
     public string $name;
     public string $description;
     public bool $completed;
+    public int $userId;
 
     public function __construct(array $values){
         $this->name = $values['name'];
         $this->description = $values['description'];
         $this->completed = boolval($values['completed']);
+        $this->userId = $values['userId'];
     }
 
     public function toArray():array{
@@ -19,6 +21,7 @@ final class CreateTaskDto {
             'name' =>$this->name,
             'description' =>$this->description,
             'completed' => boolval($this->completed),
+            'userId' => $this->userId,
         ];
     }
 
