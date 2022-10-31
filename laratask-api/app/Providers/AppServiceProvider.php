@@ -7,6 +7,7 @@ use App\Domain\UseCase\CreateUser;
 use App\Domain\UseCase\DeleteTask;
 use App\Domain\UseCase\GetTask;
 use App\Domain\UseCase\UpdateTask;
+use App\Domain\UseCase\CompleteTask;
 use App\Infra\Repositories\TaskRepositoryEloquent;
 use App\Infra\Repositories\UserRepositoyEloquent;
 use App\Models\TaskModel;
@@ -22,10 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->bind('App\Interfaces\TaskRepositoryInterface','App\Infra\Repositories\TaskRepositoryEloquent');
-        // $this->app->bind('App\Interfaces\TaskRepositoryInterface',function (){
-        //     return new TaskRepositoryEloquent(new TaskModel());
-        // });
 
         $this->app->bind('App\Interfaces\CreateTaskInterface',function (){
             return new CreateTask(new TaskRepositoryEloquent(new TaskModel()) );
@@ -41,6 +38,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('App\Interfaces\UpdateTaskInterface',function (){
             return new UpdateTask(new TaskRepositoryEloquent(new TaskModel()) );
+        });
+
+        $this->app->bind('App\Interfaces\CompleteTaskInterface',function (){
+            return new CompleteTask(new TaskRepositoryEloquent(new TaskModel()) );
         });
 
         $this->app->bind('App\Interfaces\CreateUserInterface',function (){

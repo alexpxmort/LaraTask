@@ -6,7 +6,7 @@ use App\Domain\Entity\Task;
 use App\Interfaces\TaskRepositoryInterface ;
 
 
-interface UpdateTaskInterface{
+interface CompleteTaskInterface{
     public function __construct( TaskRepositoryInterface $model);
-    public function execute(array $updateTaskDto,Task $updatedTask);
+    public function execute(array $completeTaskDto);
 }

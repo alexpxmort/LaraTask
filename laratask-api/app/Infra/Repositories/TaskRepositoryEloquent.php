@@ -48,4 +48,20 @@ class TaskRepositoryEloquent  implements TaskRepositoryInterface {
             throw $e;
         }
     }
+
+    public function completeTask(int $taskId){
+        $task = $this->findById($taskId);
+
+        if(!$task){
+            throw new NotFoundException('NOT FOUND TASK');
+        }
+
+        try{
+            $task->update([
+                'completed' => true,
+            ]);
+        }catch(\Exception $e){
+            throw $e;
+        }
+    }
 }

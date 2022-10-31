@@ -9,6 +9,7 @@ use App\Http\Controllers\DeleteTaskController;
 use App\Http\Controllers\GetTaskController;
 use App\Http\Controllers\GetTasksController;
 use App\Http\Controllers\UpdateTaskController;
+use App\Http\Controllers\CompleteTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::get('/{id}', [GetTaskController::class ,'handle']);
         Route::delete('/{id}', [DeleteTaskController::class ,'handle']);
         Route::put('/{id}', [UpdateTaskController::class ,'handle']);
+        Route::patch('/completeTask/{id}', [CompleteTaskController::class ,'handle']);
         Route::post('/create', [CreateTaskController::class ,'handle']);
     });
 });

@@ -12,4 +12,5 @@ interface TaskRepositoryInterface{
     public function findByUser(Model $user);
     public function delete(int $taskId);
     public function update(int $taskId,Task $updatedTask);
+    public function completeTask(int $taskId);
 }
