@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 
 use App\Http\HttpResponseStatusHelper;
-
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CreateUserControllerTest extends TestCase
@@ -21,7 +21,7 @@ class CreateUserControllerTest extends TestCase
     
         $response = $this->post('/api/users/create',[
             'name' => 'test',
-            'email' => 'test@gmail.com',
+            'email' => Str::random(40).'@gmail.com',
             'password' => '123456'
         ]);
 

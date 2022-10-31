@@ -11,7 +11,8 @@ namespace App\Http;
             'INTERNAL_SERVER_ERROR'=>500,
             'NOT_FOUND'=>404,
             'NO_CONTENT'=>204,
-            'CREATED' => 201
+            'CREATED' => 201,
+            'UNATHORIZED' => 401
         ];
 
         return $STATUS_CODES[$codeName];
