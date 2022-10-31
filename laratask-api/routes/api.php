@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\CreateUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CreateTaskController;
+use App\Http\Controllers\DeleteTaskController;
+use App\Http\Controllers\GetTaskController;
+use App\Http\Controllers\GetTasksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +23,9 @@ use App\Http\Controllers\CreateTaskController;
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::prefix('tasks')->group(function () {
+        Route::get('/', [GetTasksController::class ,'handle']);
+        Route::get('/{id}', [GetTaskController::class ,'handle']);
+        Route::delete('/{id}', [DeleteTaskController::class ,'handle']);
         Route::post('/create', [CreateTaskController::class ,'handle']);
     });
 });

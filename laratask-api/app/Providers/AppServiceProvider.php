@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Domain\UseCase\CreateTask;
 use App\Domain\UseCase\CreateUser;
+use App\Domain\UseCase\DeleteTask;
+use App\Domain\UseCase\GetTask;
 use App\Infra\Repositories\TaskRepositoryEloquent;
 use App\Infra\Repositories\UserRepositoyEloquent;
 use App\Models\TaskModel;
@@ -26,6 +28,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('App\Interfaces\CreateTaskInterface',function (){
             return new CreateTask(new TaskRepositoryEloquent(new TaskModel()) );
+        });
+
+        $this->app->bind('App\Interfaces\GetTaskInterface',function (){
+            return new GetTask(new TaskRepositoryEloquent(new TaskModel()) );
+        });
+
+        $this->app->bind('App\Interfaces\DeleteTaskInterface',function (){
+            return new DeleteTask(new TaskRepositoryEloquent(new TaskModel()) );
         });
 
         $this->app->bind('App\Interfaces\CreateUserInterface',function (){
