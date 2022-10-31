@@ -5,13 +5,18 @@ namespace Tests\Feature;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Http\HttpResponseStatusHelper;
-
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class UpdateTaskController extends TestCase
 {
 
-    private  $taskId = 1;
+    public function getLastId(){
+        $lastId =  DB::select('SELECT MAX(id) as id FROM tasks');
+ 
+        return $lastId[0]->id;
+     }
+
     /**
      * 
      *
@@ -21,7 +26,7 @@ class UpdateTaskController extends TestCase
     {
 
         
-        $response = $this->put('/api/tasks/'.$this->taskId,[
+        $response = $this->put('/api/tasks/'.$this->getLastId(),[
             'name' => 'test',
             'description' => 'test desc',
             'completed' => false
@@ -37,7 +42,7 @@ class UpdateTaskController extends TestCase
      *
      * @return void
      */
-    public function test_create_task_returns_a_successfulll_response()
+    public function test_update_task_returns_a_successfulll_response()
     {
 
         $dataResponseLogin = $this->post('/api/auth/login',[
@@ -46,7 +51,7 @@ class UpdateTaskController extends TestCase
         ])->decodeResponseJson();
 
 
-        $response = $this->put('/api/tasks/'.$this->taskId,[
+        $response = $this->put('/api/tasks/'.$this->getLastId(),[
             'name' => 'test',
             'description' => 'test desc updated',
             'completed' => false
@@ -70,7 +75,7 @@ class UpdateTaskController extends TestCase
             'password' => '123456'
         ])->decodeResponseJson();
 
-        $response = $this->put('/api/tasks/'.$this->taskId,[
+        $response = $this->put('/api/tasks/'.$this->getLastId(),[
             'description' => 'test desc updated',
             'completed' => false
         ],[
