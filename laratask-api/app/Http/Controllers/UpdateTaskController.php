@@ -18,13 +18,11 @@ class UpdateTaskController extends Controller{
 
 
     public function handle($id){
-        
 
-                
             $inputData = Request::all();
             $validator =   $this->validateTask($inputData);
 
-        
+
             if(!$validator->fails()){
                 try{
                     $updatedTask = Task::create([
@@ -32,14 +30,13 @@ class UpdateTaskController extends Controller{
                     'description' =>$inputData['description'],
                     'completed' => boolval($inputData['completed']),
                     ]);
-        
-        
+
                     $output =  $this->updateTask->execute([
                         'id' => $id
                     ],$updatedTask);
-        
+
                     return response()->json($output,HttpResponseStatusHelper::getStatusCode('NO_CONTENT'));
-        
+
                 }catch(\Exception $e){
                     return response()->json([
                         'msg'=>$e->getMessage(),
@@ -47,10 +44,10 @@ class UpdateTaskController extends Controller{
                   }
             }else{
                 return response()->json($validator->errors(),HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
-            }        
+            }
     }
-        
-        
+
+
 
 
 public function validateTask($data){
@@ -63,6 +60,6 @@ public function validateTask($data){
      return $validate;
  }
 
-    
-    
+
+
 }

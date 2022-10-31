@@ -13,13 +13,13 @@ use App\Interfaces\UpdateTaskInterface;
     public function __construct( TaskRepositoryInterface $model)
     {
 
-     $this->model = $model;   
+     $this->model = $model;
     }
 
-    public  function execute(array $deleteTaskDto,Task $updatedTask){
+    public  function execute(array $updateTaskDto,Task $updatedTask){
 
         try{
-            $this->model->update($deleteTaskDto['id'],$updatedTask);
+            $this->model->update($updateTaskDto['id'],$updatedTask);
         }catch(\Exception $e){
             throw $e;
         }

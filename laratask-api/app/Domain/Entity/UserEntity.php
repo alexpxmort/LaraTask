@@ -13,7 +13,10 @@ namespace App\Domain\Entity;
         $this->email = $values['email'];
         $this->password = $values['password'];
 
-       
+        if(array_key_exists('id',$values)){
+            $this->id =  $values['id'];
+        }
+
     }
 
     public function toArray():array{
@@ -40,7 +43,7 @@ namespace App\Domain\Entity;
         return $this->email;
     }
 
-    
+
     public function getPassword():string{
         return $this->password;
     }

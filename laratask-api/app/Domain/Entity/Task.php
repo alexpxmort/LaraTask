@@ -13,6 +13,10 @@ namespace App\Domain\Entity;
         $this->description = $values['description'];
         $this->completed = $values['completed'];
 
+        if(array_key_exists('id',$values)){
+            $this->id =  $values['id'];
+        }
+
     }
 
     public function toArray():array{

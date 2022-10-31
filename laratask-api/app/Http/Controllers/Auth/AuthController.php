@@ -15,6 +15,8 @@ use JWTAuth;
 
 class AuthController extends Controller{
 
+    private $minutesExpiresToken = 60;
+
     public function handle(){
         $inputData = Request::all();
         $validator =   $this->validateLogin($inputData);
@@ -26,7 +28,7 @@ class AuthController extends Controller{
 
                 if($token = JWTAuth::attempt(
                    $loginDto->toArray(),
-                    ['exp' => Carbon::now()->addMinutes(5)->timestamp]
+                    ['exp' => Carbon::now()->addMinutes($this->minutesExpiresToken)->timestamp]
                 )){
                     return response()->json(['token' => $token,],HttpResponseStatusHelper::getStatusCode('OK'));
                 }else{
