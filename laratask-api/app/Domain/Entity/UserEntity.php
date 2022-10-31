@@ -3,7 +3,7 @@
 namespace App\Domain\Entity;
 
  final class UserEntity{
-    private int $id;
+    private ?int $id = null;
     private string $name;
     private string $email;
     private string $password;
@@ -13,18 +13,22 @@ namespace App\Domain\Entity;
         $this->email = $values['email'];
         $this->password = $values['password'];
 
-        if(array_key_exists('id',$values)){
-            $this->id = $values['id'];
-        }
+       
     }
 
     public function toArray():array{
-        return [
+        $arrUser = [
             'id'=>$this->id,
             'name' =>$this->name,
             'email' =>$this->email,
             'password' => $this->password,
         ];
+
+        if($this->id){
+            $arrUser['id'] = $this->id;
+        }
+
+        return $arrUser;
     }
 
 

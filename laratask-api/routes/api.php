@@ -8,6 +8,7 @@ use App\Http\Controllers\CreateTaskController;
 use App\Http\Controllers\DeleteTaskController;
 use App\Http\Controllers\GetTaskController;
 use App\Http\Controllers\GetTasksController;
+use App\Http\Controllers\UpdateTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::get('/', [GetTasksController::class ,'handle']);
         Route::get('/{id}', [GetTaskController::class ,'handle']);
         Route::delete('/{id}', [DeleteTaskController::class ,'handle']);
+        Route::put('/{id}', [UpdateTaskController::class ,'handle']);
         Route::post('/create', [CreateTaskController::class ,'handle']);
     });
 });

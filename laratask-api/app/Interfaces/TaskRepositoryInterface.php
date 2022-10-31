@@ -2,6 +2,7 @@
 
 namespace App\Interfaces;
 
+use App\Domain\Entity\Task;
 use Illuminate\Database\Eloquent\Model;
 
 interface TaskRepositoryInterface{
@@ -10,4 +11,5 @@ interface TaskRepositoryInterface{
     public function findById(int $id);
     public function findByUser(Model $user);
     public function delete(int $taskId);
+    public function update(int $taskId,Task $updatedTask);
 }

@@ -3,7 +3,7 @@
 namespace App\Domain\Entity;
 
  final class Task{
-    private int $id;
+    private ?int $id = null;
     private string $name;
     private string $description;
     private bool $completed = false;
@@ -13,18 +13,20 @@ namespace App\Domain\Entity;
         $this->description = $values['description'];
         $this->completed = $values['completed'];
 
-        if(array_key_exists('id',$values)){
-            $this->id = $values['id'];
-        }
     }
 
     public function toArray():array{
-        return [
-            'id'=>$this->id,
+        $arrTask =  [
             'name' =>$this->name,
             'description' =>$this->description,
             'completed' => boolval($this->completed),
         ];
+
+        if($this->id){
+            $arrTask['id'] = $this->id;
+        }
+
+        return $arrTask;
     }
 
 
