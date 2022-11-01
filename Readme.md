@@ -28,7 +28,11 @@ rodar os comandos na ordem:
  php artisan db:seed --class=UserTaskSeeder
 ```
 
+## Tests
 
+```bash
+ php artisan test
+```
 
 ## Features
 
