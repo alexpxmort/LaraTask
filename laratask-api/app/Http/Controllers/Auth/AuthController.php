@@ -9,8 +9,7 @@ use App\Http\HttpResponseStatusHelper;
 use App\Interfaces\LoginInterface;
 use Carbon\Carbon;
 
-
-use JWTAuth;
+use Auth;
 
 
 class AuthController extends Controller{
@@ -26,7 +25,7 @@ class AuthController extends Controller{
 
                 $loginDto =  LoginDto::create($inputData);
 
-                if($token = JWTAuth::attempt(
+                if($token = Auth::attempt(
                    $loginDto->toArray(),
                     ['exp' => Carbon::now()->addMinutes($this->minutesExpiresToken)->timestamp]
                 )){
@@ -38,7 +37,6 @@ class AuthController extends Controller{
                 return response()->json([]);
             }catch(\Exception $e){
 
-                dd($e);
                 return response()->json([
                     'msg'=>$e->getMessage(),
                 ],HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
@@ -46,6 +44,15 @@ class AuthController extends Controller{
         }else{
             return response()->json($validator->errors(),HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
         }
+    }
+
+    public function logOut(){
+       try{
+            Auth::logout();
+            return response()->json(['msg' => true],HttpResponseStatusHelper::getStatusCode('OK'));
+       }catch(\Exception $e){
+        return response()->json($e->getMessage(),HttpResponseStatusHelper::getStatusCode('BAD_REQUEST'));
+       }
     }
 
     public function validateLogin($data){

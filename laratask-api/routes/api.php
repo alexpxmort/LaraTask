@@ -32,6 +32,8 @@ Route::group(['middleware' => 'jwt.auth'], function () {
         Route::patch('/completeTask/{id}', [CompleteTaskController::class ,'handle']);
         Route::post('/create', [CreateTaskController::class ,'handle']);
     });
+
+    Route::post('/auth/logOut',[AuthController::class ,'logOut']);
 });
 
 
