@@ -47,6 +47,7 @@ rodar os comandos na ordem:
 ## API
 
 - post => '/auth/login'
+- post => '/auth/logOut'
 - post => '/users/create'
 
 - post => '/tasks/create'
